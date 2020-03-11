@@ -6,12 +6,12 @@ from urllib.parse import unquote_plus
 
 def parse(string: Text) -> Dict[str, str]:
     output: Dict[str, str] = {}
-    pairs: List[str] = string.split(sep=";")
+    pairs: List[str] = unquote_plus(string).split(sep=";")
     output["basepath"] = pairs[0]
 
     for pair in pairs[1:]:
         temp: List[str] = pair.split(sep="=", maxsplit=1)
-        output[temp[0]] = unquote_plus(temp[1])
+        output[temp[0]] = temp[1]
 
     return output
 
