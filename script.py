@@ -1,5 +1,4 @@
 import argparse
-import json
 from pprint import PrettyPrinter as pp
 from typing import Any, Dict, List, Text
 from urllib.parse import unquote_plus
