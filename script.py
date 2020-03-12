@@ -1,4 +1,5 @@
 import argparse
+import json
 from pprint import PrettyPrinter as pp
 from typing import Any, Dict, List, Text
 from urllib.parse import unquote_plus
@@ -19,7 +20,7 @@ def parse(string: Text) -> Dict[str, str]:
 def pretty_print(dict_: Dict[str, str]) -> None:
     p: Any = pp(indent=2, sort_dicts=False)
     print("\nParsed request URL:\n")
-    p.pprint(dict_)
+    p.pprint((dict_))
 
 
 def args() -> Any:
@@ -37,9 +38,7 @@ def args() -> Any:
 
 def main() -> None:
     arg: Any = args()
-
-    if arg.string:
-        pretty_print(parse(arg.string))
+    pretty_print(parse(arg.string))
 
 
 if __name__ == "__main__":
