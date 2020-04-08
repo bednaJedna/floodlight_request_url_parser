@@ -1,16 +1,20 @@
 import argparse
 from pprint import PrettyPrinter as pp
-from typing import Any, Dict, List, Text
+from typing import Any, Dict, List, Text, Tuple
 from urllib.parse import unquote_plus
 
 
-def parse(string: Text) -> Dict[str, str]:
-    output: Dict[str, str] = {}
-    pairs: List[str] = unquote_plus(string).split(sep=";")
-    output["basepath"] = pairs[0]
+def parse(
+    string: Text, basepath_sep=";", payload_params_sep=";", params_vals_sep="="
+) -> Dict[str, str]:
 
-    for pair in pairs[1:]:
-        temp: List[str] = pair.split(sep="=", maxsplit=1)
+    output: Dict[str, str] = {}
+    string_parts: Tuple[str, str, str] = unquote_plus(string).partition(basepath_sep)
+    pairs: List[str] = string_parts[2].split(sep=payload_params_sep)
+    output["basepath"] = string_parts[0]
+
+    for pair in pairs:
+        temp: List[str] = pair.split(sep=params_vals_sep, maxsplit=1)
         output[temp[0]] = temp[1]
 
     return output
