@@ -30,18 +30,34 @@ def args() -> Any:
     parser: Any = argparse.ArgumentParser(
         description="Parses and prints foodlight request URL for human use"
     )
-    parser.add_argument(
-        "string",
+    subparsers: Any = parser.add_subparsers()
+
+    parser_fl: Any = subparsers.add_parser(
+        "parse_fl", help="Enter floodlight string to be parsed."
+    )
+    parser_fl.add_argument(
+        "fl_string",
         action="store",
         type=str,
         help="Insert Floodlight request URL to parse.",
+    )
+    parser_ga: Any = subparsers.add_parser(
+        "parse_ga", help="Enter GA string to be parsed."
+    )
+    parser_ga.add_argument(
+        "ga_string", action="store", type=str, help="Insert GA request URL to parse.",
     )
     return parser.parse_args()
 
 
 def main() -> None:
     arg: Any = args()
-    pretty_print(parse(arg.string))
+
+    if hasattr(arg, "fl_string"):
+        pretty_print(parse(arg.fl_string))
+
+    if hasattr(arg, "ga_string"):
+        pretty_print(parse(arg.ga_string, basepath_sep="?", payload_params_sep="&"))
 
 
 if __name__ == "__main__":
