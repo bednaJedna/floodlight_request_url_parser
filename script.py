@@ -7,7 +7,19 @@ from urllib.parse import unquote_plus
 def parse(
     string: Text, basepath_sep=";", payload_params_sep=";", params_vals_sep="="
 ) -> Dict[str, str]:
-
+    """Parses provided request URL string into dictionary so humans can read it.
+    
+    Arguments:
+        string {Text} -- request URL
+    
+    Keyword Arguments:
+        basepath_sep {str} -- separator of basepath and payload (default: {";"})
+        payload_params_sep {str} -- separator of payload parameters (default: {";"})
+        params_vals_sep {str} -- separator of parameter and it's value (default: {"="})
+    
+    Returns:
+        Dict[str, str] -- parsed request URL 
+    """
     output: Dict[str, str] = {}
     string_parts: Tuple[str, str, str] = unquote_plus(string).partition(basepath_sep)
     pairs: List[str] = string_parts[2].split(sep=payload_params_sep)
@@ -21,12 +33,24 @@ def parse(
 
 
 def pretty_print(dict_: Dict[str, str]) -> None:
+    """Pretty prints the provided dictionary in the console.
+
+    PrettyPrinter is used for this. Sort_dicts is turned off.
+    
+    Arguments:
+        dict_ {Dict[str, str]} -- dictionary to be pretty printed
+    """
     p: Any = pp(indent=2, sort_dicts=False)
     print("\nParsed request URL:\n")
     p.pprint((dict_))
 
 
 def args() -> Any:
+    """Parser of console inputs.
+    
+    Returns:
+        Any -- parsed inputs.
+    """
     parser: Any = argparse.ArgumentParser(
         description="Parses and prints foodlight request URL for human use"
     )
@@ -51,6 +75,8 @@ def args() -> Any:
 
 
 def main() -> None:
+    """Main function.
+    """
     arg: Any = args()
 
     if hasattr(arg, "fl_string"):
