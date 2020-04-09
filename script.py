@@ -56,20 +56,23 @@ def args() -> Any:
     )
     subparsers: Any = parser.add_subparsers()
 
-    parser_fl: Any = subparsers.add_parser(
-        "parse_fl", help="Enter floodlight string to be parsed."
+    parser_semicolon: Any = subparsers.add_parser(
+        "parse_semi", help="Enter floodlight string to be parsed."
     )
-    parser_fl.add_argument(
-        "fl_string",
+    parser_semicolon.add_argument(
+        "semi_string",
         action="store",
         type=str,
         help="Insert Floodlight request URL to parse.",
     )
-    parser_ga: Any = subparsers.add_parser(
-        "parse_ga", help="Enter GA string to be parsed."
+    parser_question: Any = subparsers.add_parser(
+        "parse_question", help="Enter GA string to be parsed."
     )
-    parser_ga.add_argument(
-        "ga_string", action="store", type=str, help="Insert GA request URL to parse.",
+    parser_question.add_argument(
+        "question_string",
+        action="store",
+        type=str,
+        help="Insert GA request URL to parse.",
     )
     return parser.parse_args()
 
@@ -79,11 +82,13 @@ def main() -> None:
     """
     arg: Any = args()
 
-    if hasattr(arg, "fl_string"):
-        pretty_print(parse(arg.fl_string))
+    if hasattr(arg, "semi_string"):
+        pretty_print(parse(arg.semi_string))
 
-    if hasattr(arg, "ga_string"):
-        pretty_print(parse(arg.ga_string, basepath_sep="?", payload_params_sep="&"))
+    if hasattr(arg, "question_string"):
+        pretty_print(
+            parse(arg.question_string, basepath_sep="?", payload_params_sep="&")
+        )
 
 
 if __name__ == "__main__":
