@@ -27,7 +27,10 @@ def parse(
 
     for pair in pairs:
         temp: List[str] = pair.split(sep=params_vals_sep, maxsplit=1)
-        output[temp[0]] = temp[1]
+        try:
+            output[temp[0]] = temp[1]
+        except IndexError:
+            output[temp[0]] = ""
 
     return output
 
